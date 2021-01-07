@@ -1,9 +1,4 @@
-import {
-  login,
-  logout,
-  getContacts,
-  addContact,
-} from 'https://pixabay.com/api/';
+import { login, logout, getContacts, addContact } from './api';
 import './style.css';
 
 const refs = {
@@ -37,8 +32,8 @@ const render = () => {
 
 const handleLogin = () => {
   const userData = {
-    email: 'test.user@mail.com',
-    password: '1234567',
+    email: 'larisaobikhod@gmail.com',
+    password: '19754585-5ce23e59215fa1e22c6ea29d4',
   };
 
   showLoader();
