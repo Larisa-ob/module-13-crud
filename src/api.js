@@ -1,8 +1,7 @@
 const login = userData =>
   Promise.resolve({
     user: { name: 'Test User', email: 'test.user@mail.com' },
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmVhMDY0Y2I4ZmY0ODAwMTdhNWRiMjYiLCJpYXQiOjE2MDkxNzU4Nzh9.ufolexUx_gmDMl7-xnAcN5QReRmOHeJnfHjgGfUzFi0',
+    token: '19754585-5ce23e59215fa1e22c6ea29d4',
   });
 
 export const logout = () => Promise.resolve();

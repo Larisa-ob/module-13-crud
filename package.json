@@ -1,7 +1,7 @@
 {
   "name": "js-group-24",
   "version": "1.0.0",
-  "description": "",
+  "description": "# Перед началом работы",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env.mode development",
@@ -43,5 +43,13 @@
     "axios": "^0.19.2",
     "handlebars": "^4.1.2",
     "toastr": "^2.1.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Larisa-ob/module-13-crud.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Larisa-ob/module-13-crud/issues"
+  },
+  "homepage": "https://github.com/Larisa-ob/module-13-crud#readme"
 }

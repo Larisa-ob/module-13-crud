@@ -1,4 +1,9 @@
-import { login, logout, getContacts, addContact } from './api';
+import {
+  login,
+  logout,
+  getContacts,
+  addContact,
+} from 'https://pixabay.com/api/';
 import './style.css';
 
 const refs = {
