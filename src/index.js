@@ -1,92 +1,32 @@
-import { login, logout, getContacts, addContact } from './api';
-import './style.css';
+import './styles.css';
+import refs from './js/refs';
+import markupImages from './tamplate/upImages.hbs';
+import apiService from './apiService';
+import 'handlebars';
 
-const refs = {
-  loader: document.querySelector('.loader'),
-  login: document.querySelector('.login'),
-  logout: document.querySelector('.logout'),
-  content: document.querySelector('.content'),
-  form: document.querySelector('.form'),
-  userInfo: document.querySelector('.user-info'),
-  name: document.querySelector('.name'),
-  email: document.querySelector('.email'),
-  list: document.querySelector('.list'),
-};
+refs.searchForm.addEventListener('submit', event => {
+  event.preventDefault();
 
-let contacts = [];
+  const form = event.currentTarget;
+  apiService.query = form.elements.query.value;
 
-const showLoader = () => refs.loader.classList.add('show');
-const hideLoader = () => refs.loader.classList.remove('show');
+  refs.galleryList.innerHTML = '';
 
-const render = () => {
-  const items = contacts
-    .map(
-      ({ id, name, number }) =>
-        `<li data-id=${id}>${name}: ${number} <button class="delete">x</button></li>`,
-    )
-    .join('');
+  apiService.resertPage();
+  refs.loadMoreBtn.classList.add('is-hidden');
 
-  refs.list.innerHTML = '';
-  refs.list.insertAdjacentHTML('beforeend', items);
-};
+  apiService.fetchApiSearch().then(hits => {
+    markupImages(hits);
+    refs.loadMoreBtn.classList.remove('is-hidden');
+    window.scrollTo({
+      top: document.documentElement.offsetHeight,
+      behavior: 'smooth',
+    });
+  });
 
-const handleLogin = () => {
-  const userData = {
-    email: 'larisaobikhod@gmail.com',
-    password: '19754585-5ce23e59215fa1e22c6ea29d4',
-  };
+  form.reset();
+});
 
-  showLoader();
-
-  login(userData)
-    .then(({ user }) => {
-      refs.name.textContent = user.name;
-      refs.email.textContent = user.email;
-
-      refs.login.classList.remove('show');
-      refs.logout.classList.add('show');
-      refs.content.classList.add('show');
-    })
-    .then(getContacts)
-    .then(data => (contacts = data))
-    .then(render)
-    .finally(hideLoader);
-};
-
-const handleLogout = () => {
-  showLoader();
-
-  logout()
-    .then(() => {
-      refs.name.textContent = '';
-      refs.email.textContent = '';
-
-      refs.content.classList.remove('show');
-      refs.logout.classList.remove('show');
-      refs.login.classList.add('show');
-    })
-    .finally(hideLoader);
-};
-
-const handleSubmit = e => {
-  const { name, number } = e.target.elements;
-  const newContact = { name: name.value, number: number.value };
-
-  e.preventDefault();
-  showLoader();
-
-  addContact(newContact)
-    .then(contact => {
-      contacts.push(contact);
-    })
-    .then(render)
-    .then(() => {
-      name.value = '';
-      number.value = '';
-    })
-    .finally(hideLoader);
-};
-
-refs.login.addEventListener('click', handleLogin);
-refs.logout.addEventListener('click', handleLogout);
-refs.form.addEventListener('submit', handleSubmit);
+refs.loadMoreBtn.addEventListener('click', () => {
+  apiService.fetchApiSearch().then(markupImages);
+});
